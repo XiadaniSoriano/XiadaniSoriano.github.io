@@ -1,0 +1,124 @@
+<html>
+
+  <head>
+     
+      <script type="text/javascript" src="js/processing.js"></script>
+  </head>
+  
+  <body>
+    <h1>My Ball Game</h1>
+    <p>This is just a simple game to play when you're bored. You can't will or lose. Sowwy.</p>
+    
+    <script type="text/processing">
+    
+      //decline variables
+int gameState;
+
+int rad=30;
+float xpos, ypos;
+
+float xspeed=2.9;
+float yspeed=2.3;
+
+int xdirection = 1;
+int ydirection = 1;
+
+int score=0;
+int highScore=0;
+
+
+
+//setup
+void setup(){
+  size(600, 600);
+  gameState=0;
+  xpos = 300;
+  ypos = 300;
+  
+  
+  
+}
+
+//main
+void draw(){
+  background(#000000); //black background
+
+  if(gameState==0){
+    startScreen();
+  }
+  else if(gameState==1){
+    gameScreen();
+  }
+ 
+}
+
+void startScreen(){
+  textSize(44);
+  fill(#FFFFFF);
+  text("Hello!", 40, 100);
+  textSize(35);
+  text("Try to get 1000!!!", 40, 180);
+  textSize(15);
+  text("hehe uwu",500, 570);
+  
+  if(mouseY<310 && mouseY>250 && mouseX>95 && mouseX<395){
+    fill(#020FE8);}
+  else{
+    fill(#05E802);
+  }
+  rect(95, 310, 300, -55, 15);
+  textSize(44);
+  fill(#FF0303); //red
+  text("Click to Start", 100, 300);
+   
+}
+
+
+void mousePressed(){
+  if(mouseY<310 && mouseY>250 && mouseX>95 && mouseX<395){
+  gameState=1;
+  }
+
+}
+
+
+void gameScreen(){
+  background(#000000);
+  fill(#05E802);
+  rect(15, 15, 570, 570);
+  fill(0);
+  rect(20, 20, 560, 560);
+ 
+ 
+  xpos = xpos + ( xspeed * xdirection );
+  ypos = ypos + ( yspeed * ydirection );
+  
+  if (xpos > width-rad || xpos < rad) {
+    xdirection *= -1;
+  }
+  if (ypos > height-rad || ypos < rad) {
+    ydirection *= -1;
+  }
+  
+  if(mouseX>xpos-25 && mouseX<xpos+25 && mouseY>ypos-25 && mouseY<ypos+25){
+    if(mousePressed==true){
+      
+     xspeed=random(6,8);
+      yspeed=random(6,9);
+      score=score+1;
+    }
+  }
+ 
+  fill(#2100FF);
+  ellipse(xpos, ypos, rad, rad);
+ 
+  text(score, 300, 100);
+   }
+   
+   
+    </script>
+    <canvas id="sketch" style="border: 1px solid black;"></canvas>
+    
+  </body>
+  
+</html>
