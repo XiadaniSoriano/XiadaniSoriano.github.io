@@ -8,11 +8,11 @@
   
   <body>
     <h1>My Ball Game</h1>
-    <p>This is just a simple game to play when you're bored.<br> You can't will or lose. Sowwy.<br> Click the ball as many times as you can.</p>
+    <p>This is just a simple game to play when you're bored.<br> You can only win if you get 1000.<br> So get clicking!!!</p>
     
     <script type="text/processing">
     
-      //decline variables
+//decline variables
 int gameState;
 
 int rad=30;
@@ -25,9 +25,7 @@ int xdirection = 1;
 int ydirection = 1;
 
 int score=0;
-int highScore=0;
-
-
+int totalscore=1000;
 
 //setup
 void setup(){
@@ -35,9 +33,6 @@ void setup(){
   gameState=0;
   xpos = 300;
   ypos = 300;
-  
-  
-  
 }
 
 //main
@@ -50,17 +45,15 @@ void draw(){
   else if(gameState==1){
     gameScreen();
   }
- 
+ else if(gameState==2){
+   endScreen();
+ }
 }
 
 void startScreen(){
   textSize(44);
   fill(#FFFFFF);
   text("Hello!", 40, 100);
-  textSize(35);
-  text("Try to get 1000!!!", 40, 180);
-  textSize(15);
-  text("hehe uwu",500, 570);
   
   if(mouseY<310 && mouseY>250 && mouseX>95 && mouseX<395){
     fill(#020FE8);}
@@ -68,7 +61,6 @@ void startScreen(){
     fill(#05E802);
   }
   rect(95, 310, 300, -55, 15);
-  textSize(44);
   fill(#FF0303); //red
   text("Click to Start", 100, 300);
    
@@ -79,7 +71,6 @@ void mousePressed(){
   if(mouseY<310 && mouseY>250 && mouseX>95 && mouseX<395){
   gameState=1;
   }
-
 }
 
 
@@ -105,18 +96,39 @@ void gameScreen(){
     if(mousePressed==true){
       
      xspeed=random(6,8);
-      yspeed=random(6,9);
-      score=score+1;
+     yspeed=random(6,9);
+     score=score+1;
     }
   }
  
   fill(#2100FF);
   ellipse(xpos, ypos, rad, rad);
  
- textSize(20);
   text(score, 300, 100);
-   }
+ 
+ if(score==totalscore){
+   gameState=2;
+ }
+}
    
+   
+void endScreen(){
+background(0);
+fill(#5C00FF);
+textSize(50);
+text("Yay! You Won!", 120, 300);
+fill(0);
+rect(230, 335, 100, 15);
+fill(#5C00FF);
+textSize(20);
+text("If you wanna play again, slide your mouse", 100, 350);
+text("to 'play again.'", 230, 370);
+ if (mouseX<330 && mouseX>230 && mouseY<350 && mouseY>335){
+  gameState=0;
+  }
+}
+
+
    
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
