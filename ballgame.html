@@ -103,7 +103,7 @@ void gameScreen(){
  
   fill(#2100FF);
   ellipse(xpos, ypos, rad, rad);
- textSize(25);
+ 
   text(score, 300, 100);
  
  if(score==totalscore){
@@ -125,10 +125,9 @@ text("If you wanna play again, slide your mouse", 100, 350);
 text("to 'play again.'", 230, 370);
  if (mouseX<330 && mouseX>230 && mouseY<350 && mouseY>335){
   gameState=0;
+  score=0;
   }
 }
-
-
    
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
