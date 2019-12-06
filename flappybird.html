@@ -1,0 +1,149 @@
+<html>
+
+  <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Flappy Luma uwu</title>
+      <script type="text/javascript" src="js/processing.js"></script>
+  </head>
+  
+  <body>
+    <h1> Flappy Luma!</h1>
+    <p>This is my version of Flappy Bird.<br>Have fun and don't die!</p>
+    
+    <script type="text/processing">
+
+PImage bg, luma, topPipe, botPipe;
+int bgx, bgy, lx, ly, g, Vly;
+int[] pipeX, pipeY;
+int gameState, score;
+
+void setup(){
+  size(800,620);
+  bg = loadImage("./img/bg.png");
+  luma = loadImage("./img/luma.png");
+  botPipe = loadImage("./img/bottompipe.png");
+  topPipe = loadImage("./img/toppipe.png");
+  lx = 100;
+  ly = 50;
+  g = 1;
+  pipeX = new int[5];
+  pipeY = new int[pipeX.length];
+  
+  for(int i = 0; i < pipeX.length; i++){
+    pipeX[i] = width + 200*i;
+    pipeY[i] = (int)random(-350, 0);
+  }
+  gameState = -1;
+}
+
+
+void draw(){
+  if(gameState == -1){
+    startScreen();
+  }
+  else if(gameState==0){
+    setBg();
+    setPipes();
+    theluma();
+    thescore();
+  }  
+  else if(gameState==1){
+    endScreen();
+    fill(1);
+    text("YOU LOSE", 20, 100);
+    }
+}
+
+void startScreen(){
+  image(bg, 0, 0);
+  textSize(40);
+  text("Welcome to Flappy Luma!", 40, 100);
+  
+  text("Click anywhere to being.", 40, 200);
+  
+  if(mousePressed){
+    ly = height/2;
+    gameState = 0;
+  }
+}
+
+void setBg(){
+image(bg, bgx, bgy);
+  image(bg, bgx + bg.width, bgy);
+  bgx = bgx - 1;
+  if(bgx < -bg.width){
+  bgx = 0;
+  }
+}
+
+void setPipes(){
+for(int i = 0; i < pipeX.length; i++)
+{
+  image(topPipe, pipeX[i], pipeY[i]);
+  image(botPipe, pipeX[i], pipeY[i] + 680);
+  pipeX[i]-= 2;
+  
+  if(pipeX[i] < -200)
+  {
+    pipeX[i] = width;
+  }
+  
+  if(lx > (pipeX[i] - 45) && lx < pipeX[i] + 66)
+  { 
+    if(!(ly > pipeY[i] + 450 && ly < pipeY[i] + (450 + 230 - 45)))
+    {
+    gameState=1;
+    }
+    else if(lx==pipeX[i] || lx==pipeX[i] + 1){
+    score++;
+    }
+  }
+  }
+}
+
+void theluma(){
+  image(luma, lx, ly);
+  ly = ly + Vly;
+  Vly = Vly + g;
+  
+  if(ly > height || ly < 0){
+    fill(0);
+    text("OH SHIZ!!! LUMA WENT OFF SCREEN", 20, 34);
+    gameState=1;
+  }
+}
+
+void thescore(){
+  textSize(32);
+  fill(#FFFFFF);
+  text("Score:" + score, width - 170, 40);
+}
+
+void endScreen(){
+  fill(0);
+  rect(266, 248, 266, 124);
+  fill(#FFFFFF);
+  textSize(23);
+  text("Click here to play again", 266, 308);
+  if(mouseX < 534 && mouseX > 266 && mouseY < 372 && mouseY > 248){
+  score=0;
+  }
+}
+
+void mousePressed(){
+  Vly = -15;
+}
+
+void mouseClicked(){
+  if(gameState==1 && mouseX < 534 && mouseX > 266 && mouseY < 372 && mouseY > 248 ){
+    setup();
+    score=0;
+  }
+}
+
+      </script>
+    <canvas id="sketch" style="border: 1px solid black;"></canvas>
+    
+  </body>
+  
+</html>
