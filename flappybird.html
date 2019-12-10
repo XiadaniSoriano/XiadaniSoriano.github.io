@@ -15,7 +15,7 @@
 PImage bg, luma, topPipe, botPipe;
 int bgx, bgy, lx, ly, g, Vly;
 int[] pipeX, pipeY;
-int gameState, score;
+int gameState, score, highscore;
 
 void setup(){
   size(800,620);
@@ -111,12 +111,19 @@ void theluma(){
     text("OH SHIZ!!! LUMA WENT OFF SCREEN", 20, 34);
     gameState=1;
   }
+  
+  if(score > highscore){
+    highscore = highscore + 1;
+  }
 }
 
 void thescore(){
   textSize(32);
   fill(#FFFFFF);
   text("Score:" + score, width - 170, 40);
+  
+  fill(#FFFFFF);
+  text("Highscore:" + highscore, 570, 600);
 }
 
 void endScreen(){
